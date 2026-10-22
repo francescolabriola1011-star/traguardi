@@ -214,6 +214,7 @@ D.voci.forEach(v => {
     if (mc) parti.push(mc+" clienti"); if (mm) parti.push(eur(mm)+" di MRR");
     manca = parti.length ? "Mancano "+parti.join(" e ") : "";
     ora = `${D.cli} di ${v.cli} clienti \u00b7 ${eur(D.mrr)} di ${eur(v.mrr)} MRR`;
+  } else if (v.tipo==="pila" && D.pila==null){ p=0; manca="Saldo Pila non letto dalla fonte"; ora="n.d.";
   } else if (v.tipo==="pila"){ p=D.pila/v.soglia; manca="Mancano "+eur(v.soglia-D.pila)+" di Pila"; ora=`${eur(D.pila)} di ${eur(v.soglia)}`; }
   else if (v.tipo==="cum"){ p=D.incassi/v.soglia; manca="Mancano "+eur(v.soglia-D.incassi)+" di incassi"; ora=`${eur(D.incassi)} di ${eur(v.soglia)} incassati`; }
   else if (v.tipo==="anno"){ p=0; manca="Si misura da gennaio "+v.data.slice(0,4); ora="obiettivo "+eur(v.soglia); }
