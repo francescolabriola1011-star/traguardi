@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Traguardi Francesco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Fraunces:ital,opsz,wght@1,9..144,600;1,9..144,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+body{margin:0}
+/* Layout: testata con anello di avanzamento e prossimo traguardo; mensola dei raggiunti; linea del tempo per anno con tutti i traguardi da raggiungere; valore finale. Tema unico scuro, colori del brand. */
+:root{
+  --navy:#0B1A3A; --navy-2:#11234D; --navy-3:#1A3068; --line:#253C78;
+  --yellow:#FFD21F; --gold:#D4A537; --white:#FFFFFF; --muted:#AEBBDA; --dim:#7484AD;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-accent:"Fraunces",Georgia,serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--navy);color:var(--white);font-family:var(--f-display);font-size:15px;line-height:1.45;
+  background-image:radial-gradient(900px 520px at 100% -5%,rgba(212,165,55,.18),transparent 62%),radial-gradient(800px 600px at -10% 20%,rgba(26,48,104,.85),transparent 70%)}
+.wrap{max-width:1120px;margin:0 auto;padding-block:40px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+
+/* testata */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:stretch}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(44px,8vw,86px);font-weight:900;font-stretch:115%;letter-spacing:-.03em;line-height:.92;margin:10px 0 0}
+h1 em{font-family:var(--f-accent);font-style:italic;font-weight:800;color:var(--yellow);font-stretch:100%;letter-spacing:-.01em}
+.lead{color:var(--muted);font-size:17px;max-width:46ch;margin:16px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:24px}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.05}
+.stats span{color:var(--dim);font-size:12.5px;font-weight:600}
+.next{position:relative;overflow:hidden;background:linear-gradient(155deg,#1B3270,var(--navy-2) 70%);border:1px solid var(--line);border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.next::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,210,31,.22),transparent 70%)}
+.next .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow)}
+.next .body{display:flex;gap:18px;align-items:center}
+.ring{flex:none;width:118px;height:118px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .pc{position:absolute;inset:0;display:grid;place-items:center;font-size:28px;font-weight:900;font-variant-numeric:tabular-nums}
+.next h2{margin:0;font-size:26px;font-weight:900;font-stretch:108%;line-height:1.05}
+.next p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.next .manca{display:inline-block;margin-top:10px;background:rgba(255,210,31,.12);color:var(--yellow);border-radius:10px;padding:6px 10px;font-weight:700;font-size:13.5px}
+
+/* barre e tag */
+.tag{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:99px;padding:3px 9px;white-space:nowrap}
+.tag.azienda{background:rgba(212,165,55,.16);color:var(--gold)}
+.tag.personale{background:rgba(255,210,31,.14);color:var(--yellow)}
+.tag.evento{background:rgba(255,255,255,.10);color:var(--white)}
+.bar{height:9px;border-radius:99px;background:var(--navy-3);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--yellow));min-width:4px}
+
+/* sezioni */
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.sh h2{margin:0;font-size:28px;font-weight:900;font-stretch:110%}
+.sh h2 em{font-family:var(--f-accent);font-style:italic;color:var(--yellow);font-weight:800}
+.sh .r{color:var(--dim);font-size:13px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;font-weight:700;color:var(--muted);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:6px 13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}
+.chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* mensola raggiunti */
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px}
+.won{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,rgba(255,210,31,.16),rgba(255,210,31,.04));border:1px solid rgba(255,210,31,.5);border-radius:18px;padding:14px 16px}
+.won .cup{flex:none;width:44px;height:44px;border-radius:14px;background:var(--yellow);display:grid;place-items:center}
+.won b{display:block;font-size:16px}
+.won span{color:var(--muted);font-size:13px}
+
+/* linea del tempo */
+.timeline{display:flex;flex-direction:column;gap:30px;margin-top:20px}
+.year{display:grid;grid-template-columns:92px minmax(0,1fr);gap:18px}
+.year .y{font-size:34px;font-weight:900;font-stretch:115%;color:var(--gold);line-height:1;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start}
+.year .y small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--dim);font-weight:500;margin-top:6px;letter-spacing:.04em}
+.items{display:flex;flex-direction:column;gap:12px;border-left:2px solid var(--line);padding-left:20px}
+.it{position:relative;background:var(--navy-2);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;min-width:0}
+.it::before{content:"";position:absolute;left:-29px;top:22px;width:14px;height:14px;border-radius:50%;background:var(--navy);border:3px solid var(--gold)}
+.it .h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.it h3{margin:0;font-size:18px;font-weight:800;line-height:1.2}
+.it .when{text-align:right;font-family:var(--f-mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.it .when b{display:block;font-family:var(--f-display);font-size:20px;color:var(--white);font-weight:900}
+.it .trig{grid-column:1/-1;color:var(--muted);font-size:13.5px;margin:0}
+.it .alias{grid-column:1/-1;color:var(--dim);font-size:12px;margin:0;font-style:italic}
+.it .prog{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;margin-top:6px}
+.it .prog .pc{font-weight:900;font-variant-numeric:tabular-nums;font-size:15px;color:var(--yellow)}
+.it .row{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;font-size:13px}
+.it .row .ora{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.it .row .ms{color:var(--white);font-weight:700}
+.it.late{border-color:rgba(212,165,55,.7)}
+.it.late .when b{color:var(--gold)}
+
+/* valore */
+.value{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px}
+.value div{background:var(--navy-2);border:1px solid var(--line);border-radius:18px;padding:18px}
+.value .k{color:var(--muted);font-size:13px}
+.value .v{font-size:30px;font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums}
+.value .v.g{color:var(--gold)}
+.src{color:var(--dim);font-size:12px;line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
+.src b{color:var(--muted)}
+.empty{color:var(--dim)}
+
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){
+  .year{grid-template-columns:minmax(0,1fr);gap:10px}.year .y{position:static;font-size:28px}
+  .items{padding-left:16px}.it::before{left:-25px}
+  .it{grid-template-columns:minmax(0,1fr)}.it .when{text-align:left}
+  .ring{width:96px;height:96px}.ring .pc{font-size:22px}
+}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .9s ease}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow" id="snap"></div>
+      <h1>Traguardi<br><em>di vita e d'azienda</em></h1>
+      <p class="lead">Tutti i traguardi di Obiettivi Aziendali e di Obiettivi &amp; Premi su un'unica linea del tempo, con quanto manca a ciascuno.</p>
+      <div class="stats">
+        <div><b id="sTot"></b><span>traguardi</span></div>
+        <div><b id="sOpen" style="color:var(--yellow)"></b><span>da raggiungere</span></div>
+        <div><b id="sDone" style="color:var(--gold)"></b><span>raggiunti</span></div>
+        <div><b id="sCli"></b><span>clienti attivi</span></div>
+      </div>
+    </div>
+    <aside class="next" id="next" aria-label="Prossimo traguardo"></aside>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Raggiunti</h2><span class="r" id="doneR"></span></div>
+    <div class="shelf" id="shelf"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <h2>Da <em>raggiungere</em></h2>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Al traguardo 174k</h2><span class="r">set 2030 &#183; Previsionale 36M obiettivo</span></div>
+    <div class="value">
+      <div><div class="k">Utile annuo</div><div class="v" id="vU"></div></div>
+      <div><div class="k">Margine del mese</div><div class="v" id="vM"></div></div>
+      <div><div class="k">Valore a 3x</div><div class="v g" id="v3"></div></div>
+      <div><div class="k">Valore a 4x</div><div class="v g" id="v4"></div></div>
+    </div>
+  </section>
+
+  <footer class="src">
+    <b>Fonti.</b> Traguardi, soglie e date: Obiettivi Aziendali (tab Obiettivi) e Obiettivi &amp; Premi (tab Premi).<br>
+    MRR e clienti attivi: Lista Clienti, Dashboard A19:B20. Incassi cumulati da aprile 2026: Bilancio Buyer AME, uguale a CFO Analisi.<br>
+    Pila: 20% degli incassi cumulati. Traguardi con MRR e clienti: conta il piu' basso dei due.<br>
+    Un traguardo presente in tutti e due i fogli compare una volta sola, col nome dell'altro foglio sotto.
+  </footer>
+</div>
+
+<script>
+const D = {"letto": "22/10/2026", "mrr": 8934.0, "cli": 12.0, "incassi": 55950.0, "pila": 11190.0, "voci": [{"gruppo": "azienda", "nome": "Fase 1", "alias": "Nel foglio Premi: \u20ac16,1k MRR (~21 clienti, ARPU di parco \u20ac765)", "trig": "quando i clienti attivi arrivano a 21 (Fase 1)", "tipo": "mrr_cli", "data": "2027-01-31", "fatto": "", "mrr": 16100, "cli": 21}, {"gruppo": "azienda", "nome": "Fase 2", "alias": "Nel foglio Premi: \u20ac26,8k MRR (~35 cl)", "trig": "quando i clienti attivi arrivano a 35", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "azienda", "nome": "Fase 3", "alias": "Nel foglio Premi: \u20ac52,8k MRR (~69 cl)", "trig": "quando i clienti attivi arrivano a 69", "tipo": "mrr_cli", "data": "2027-11-30", "fatto": "", "mrr": 52800, "cli": 69}, {"gruppo": "azienda", "nome": "Fase 4 operativa", "alias": "", "trig": "quando i clienti attivi arrivano a 96 e l'MRR a \u20ac73,4k", "tipo": "mrr_cli", "data": "2028-04-30", "fatto": "", "mrr": 73400, "cli": 96}, {"gruppo": "azienda", "nome": "Traguardo 174k", "alias": "Nel foglio Premi: TRAGUARDO 174k: \u20ac174k incasso al mese (~155 clienti, MRR \u20ac169,4k)", "trig": "quando l'incasso del mese supera i 174.000 (netto circa 81.765)", "tipo": "mrr_cli", "data": "2030-09-30", "fatto": "", "mrr": 169448, "cli": 155}, {"gruppo": "azienda", "nome": "\u20ac966k di fatturato nel 2027", "alias": "", "trig": "dic 2027: obiettivo 966.073 (tolleranza 1%)", "tipo": "anno", "data": "2027-12-31", "fatto": "", "soglia": 966073}, {"gruppo": "azienda", "nome": "\u20ac1,66M di fatturato nel 2028", "alias": "", "trig": "dic 2028: obiettivo 1.662.805 (tolleranza 1%)", "tipo": "anno", "data": "2028-12-31", "fatto": "", "soglia": 1662805}, {"gruppo": "evento", "nome": "Evento dal vivo col team", "alias": "Nel foglio Premi: \u20ac100k fatturato cumulato \u2192 EVENTO DI TEAM", "trig": "quando il fatturato cumulato supera i 100.000", "tipo": "cum", "data": "2026-12-31", "fatto": "", "soglia": 100000}, {"gruppo": "evento", "nome": "Evento dal vivo coi clienti", "alias": "Nel foglio Premi: \u20ac200k fatturato cumulato \u2192 EVENTO DAL VIVO", "trig": "quando il fatturato cumulato supera i 200.000", "tipo": "cum", "data": "2027-02-28", "fatto": "", "soglia": 200000}, {"gruppo": "personale", "nome": "\u20ac10k netti al mese", "alias": "", "trig": "ott 2026, primo mese sopra i 10.000 netti e stabile da li in avanti.", "tipo": "netto", "data": "2026-10-31", "fatto": "set 2026", "soglia": 10000}, {"gruppo": "personale", "nome": "Pila \u20ac14k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 14.000", "tipo": "pila", "data": "2026-10-31", "fatto": "", "soglia": 14000}, {"gruppo": "personale", "nome": "Rolex", "alias": "", "trig": "a 62.000 di Pila, a merito e con tasse zero", "tipo": "pila", "data": "2027-04-30", "fatto": "", "soglia": 62000}, {"gruppo": "personale", "nome": "Viaggio a Dubai", "alias": "", "trig": "a 35 clienti attivi (Fase 2) e tasse zero", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "personale", "nome": "Pila \u20ac125k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 125.000", "tipo": "pila", "data": "2027-08-31", "fatto": "", "soglia": 125000}, {"gruppo": "personale", "nome": "Pila \u20ac400k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 400.000", "tipo": "pila", "data": "2028-07-31", "fatto": "", "soglia": 400000}], "valore": {"utile": "\u20ac 981.179", "margine": "46,95%", "v3": "\u20ac 2.943.536", "v4": "\u20ac 3.924.714"}};
+const eur = n => "\u20ac " + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const MESI = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+const dt = iso => new Date(iso+"T12:00:00");
+const quando = iso => MESI[dt(iso).getMonth()]+" "+dt(iso).getFullYear();
+const mesiA = iso => { const d=dt(iso), o=new Date(); return (d.getFullYear()-o.getFullYear())*12+d.getMonth()-o.getMonth(); };
+const TAG = {azienda:"Azienda", personale:"Personale", evento:"Evento"};
+
+D.voci.forEach(v => {
+  let p=0, manca="", ora="";
+  if (v.tipo==="mrr_cli"){
+    p = Math.min(D.mrr/v.mrr, D.cli/v.cli);
+    const mc=Math.max(0,v.cli-D.cli), mm=Math.max(0,v.mrr-D.mrr), parti=[];
+    if (mc) parti.push(mc+" clienti"); if (mm) parti.push(eur(mm)+" di MRR");
+    manca = parti.length ? "Mancano "+parti.join(" e ") : "";
+    ora = `${D.cli} di ${v.cli} clienti \u00b7 ${eur(D.mrr)} di ${eur(v.mrr)} MRR`;
+  } else if (v.tipo==="pila"){ p=D.pila/v.soglia; manca="Mancano "+eur(v.soglia-D.pila)+" di Pila"; ora=`${eur(D.pila)} di ${eur(v.soglia)}`; }
+  else if (v.tipo==="cum"){ p=D.incassi/v.soglia; manca="Mancano "+eur(v.soglia-D.incassi)+" di incassi"; ora=`${eur(D.incassi)} di ${eur(v.soglia)} incassati`; }
+  else if (v.tipo==="anno"){ p=0; manca="Si misura da gennaio "+v.data.slice(0,4); ora="obiettivo "+eur(v.soglia); }
+  else if (v.tipo==="netto"){ p = v.fatto?1:0; ora="netto del mese dopo i costi"; }
+  v.p = Math.max(0,Math.min(1,p)); v.done = v.p>=1 || !!v.fatto; if (v.done) v.p=1; v.manca=manca; v.ora=ora;
+});
+const aperti = D.voci.filter(v=>!v.done).sort((a,b)=>a.data.localeCompare(b.data));
+const fatti = D.voci.filter(v=>v.done);
+
+// testata
+document.getElementById("snap").textContent = "Aggiornato al " + D.letto;
+document.getElementById("sTot").textContent = D.voci.length;
+document.getElementById("sOpen").textContent = aperti.length;
+document.getElementById("sDone").textContent = fatti.length;
+document.getElementById("sCli").textContent = D.cli;
+
+// prossimo traguardo: il primo in calendario fra quelli misurabili oggi
+const nx = aperti.find(v=>v.tipo!=="anno");
+const R=52, C=2*Math.PI*R, pc=Math.round(nx.p*100), mn=mesiA(nx.data);
+document.getElementById("next").innerHTML = `
+  <div class="lab">Prossimo traguardo</div>
+  <div class="body">
+    <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" fill="none" stroke="#1A3068" stroke-width="12"/>
+      <circle cx="60" cy="60" r="${R}" fill="none" stroke="url(#gr)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C*nx.p} ${C}"/>
+      <defs><linearGradient id="gr"><stop offset="0" stop-color="#D4A537"/><stop offset="1" stop-color="#FFD21F"/></linearGradient></defs></svg>
+      <div class="pc">${pc}%</div></div>
+    <div><h2>${nx.nome}</h2><p>${nx.trig}</p><p>Entro <b>${quando(nx.data)}</b>${mn>0?`, fra ${mn} ${mn===1?"mese":"mesi"}`:mn===0?", questo mese":""}</p>
+      <span class="manca">${nx.manca}</span></div>
+  </div>`;
+
+// raggiunti
+document.getElementById("doneR").textContent = fatti.length + " su " + D.voci.length;
+const cup = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B1A3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>`;
+document.getElementById("shelf").innerHTML = fatti.map(v=>`<div class="won"><div class="cup">${cup}</div><div><b>${v.nome}</b><span>raggiunto ${v.fatto||""}</span></div></div>`).join("") || `<p class="empty">Ancora nessuno.</p>`;
+
+// da raggiungere, per anno
+let filtro="tutti";
+try{ filtro = localStorage.getItem("traguardi-f") || "tutti"; }catch(e){}
+const F=[["tutti","Tutti"],["azienda","Azienda"],["personale","Personali"],["evento","Eventi"]];
+function chips(){
+  document.getElementById("filters").innerHTML = F.map(([k,n])=>{
+    const c = k==="tutti"?aperti.length:aperti.filter(v=>v.gruppo===k).length;
+    return `<button type="button" class="chip" id="f-${k}" data-k="${k}" aria-pressed="${filtro===k}">${n} \u00b7 ${c}</button>`;
+  }).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filtro=b.dataset.k;try{localStorage.setItem("traguardi-f",filtro)}catch(e){};chips();draw();});
+}
+function item(v){
+  const m=mesiA(v.data), late = m<=1;
+  const tempo = m<0?`scaduto da ${-m} mesi`:m===0?"questo mese":`fra ${m} ${m===1?"mese":"mesi"}`;
+  return `<article class="it${late?" late":""}">
+    <div class="h"><h3>${v.nome}</h3><span class="tag ${v.gruppo}">${TAG[v.gruppo]}</span></div>
+    <div class="when"><b>${quando(v.data)}</b>${tempo}</div>
+    <p class="trig">${v.trig}</p>
+    ${v.alias?`<p class="alias">${v.alias}</p>`:""}
+    <div class="prog"><div class="bar" role="progressbar" aria-valuenow="${Math.round(v.p*100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${v.p*100}%"></i></div><span class="pc">${Math.round(v.p*100)}%</span></div>
+    <div class="row"><span class="ms">${v.manca}</span><span class="ora">${v.ora}</span></div>
+  </article>`;
+}
+function draw(){
+  const lista = aperti.filter(v=>filtro==="tutti"||v.gruppo===filtro);
+  const anni = [...new Set(lista.map(v=>v.data.slice(0,4)))];
+  document.getElementById("timeline").innerHTML = anni.map(a=>{
+    const vv = lista.filter(v=>v.data.startsWith(a));
+    return `<div class="year"><div class="y">${a}<small>${vv.length} ${vv.length===1?"traguardo":"traguardi"}</small></div><div class="items">${vv.map(item).join("")}</div></div>`;
+  }).join("") || `<p class="empty">Nessun traguardo aperto in questa categoria.</p>`;
+}
+for (const [id,k] of [["vU","utile"],["vM","margine"],["v3","v3"],["v4","v4"]]) document.getElementById(id).textContent = D.valore[k] || "n.d.";
+chips(); draw();
+</script>
+
+</body>
+</html>
