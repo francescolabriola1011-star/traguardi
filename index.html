@@ -65,6 +65,34 @@ h1 em{font-family:var(--f-accent);font-style:italic;font-weight:800;color:var(--
 
 /* mensola raggiunti */
 .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px}
+/* bucket list */
+.bktools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.bksearch{flex:1 1 240px;min-width:0;display:flex;align-items:center;gap:10px;background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.bksearch:focus-within{border-color:var(--gold)}
+.bksearch input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--white);font:inherit;font-size:15px}
+.bksearch input::placeholder{color:var(--dim)}
+.bk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px;align-items:start}
+.col{background:linear-gradient(170deg,var(--navy-2),rgba(17,35,77,.55));border:1px solid var(--line);border-radius:22px;padding:20px;min-width:0}
+.col .ch{display:flex;align-items:center;gap:12px}
+.col .ci{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none}
+.col.personale .ci{background:rgba(255,210,31,.14)} .col.aziendale .ci{background:rgba(212,165,55,.16)}
+.col h3{margin:0;font-size:21px;font-weight:900;font-stretch:108%}
+.col .cs{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.col .cbar{margin:14px 0 6px}
+.col ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column}
+.col li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 4px;border-top:1px solid rgba(37,60,120,.7)}
+.col li:first-child{border-top:0}
+.ck{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;position:relative}
+.ck svg{width:30px;height:30px;transform:rotate(-90deg)}
+.ck.ok{background:var(--yellow)}
+.ck.ok svg{transform:none;width:16px;height:16px}
+.col li b{display:block;font-size:15px;font-weight:800;line-height:1.25}
+.col li.ok b{color:var(--yellow)}
+.col li span.s{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
+.col li .rt{text-align:right;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.col li .rt b{font-family:var(--f-display);font-size:14px;color:var(--white)}
+.col li.ok .rt b{color:var(--yellow)}
+@media (max-width:760px){.bk{grid-template-columns:minmax(0,1fr)}}
 .won{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,rgba(255,210,31,.16),rgba(255,210,31,.04));border:1px solid rgba(255,210,31,.5);border-radius:18px;padding:14px 16px}
 .won .cup{flex:none;width:44px;height:44px;border-radius:14px;background:var(--yellow);display:grid;place-items:center}
 .won b{display:block;font-size:16px}
@@ -132,13 +160,20 @@ h1 em{font-family:var(--f-accent);font-style:italic;font-weight:800;color:var(--
   </section>
 
   <section>
-    <div class="sh"><h2>Raggiunti</h2><span class="r" id="doneR"></span></div>
-    <div class="shelf" id="shelf"></div>
+    <div class="sh"><h2>Bucket <em>List</em></h2><span class="r" id="bkR"></span></div>
+    <div class="bktools">
+      <label class="bksearch" for="bq">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7484AD" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="bq" type="search" placeholder="Cerca nella bucket list" autocomplete="off">
+      </label>
+      <div class="filters" id="bkf"></div>
+    </div>
+    <div class="bk" id="bk"></div>
   </section>
 
   <section>
     <div class="sh">
-      <h2>Da <em>raggiungere</em></h2>
+      <h2>Road<em>map</em></h2>
       <div class="filters" id="filters"></div>
     </div>
     <div class="timeline" id="timeline"></div>
@@ -163,7 +198,7 @@ h1 em{font-family:var(--f-accent);font-style:italic;font-weight:800;color:var(--
 </div>
 
 <script>
-const D = {"letto": "22/10/2026", "mrr": 8934.0, "cli": 12.0, "incassi": 55950.0, "pila": 11190.0, "voci": [{"gruppo": "azienda", "nome": "Fase 1", "alias": "Nel foglio Premi: \u20ac16,1k MRR (~21 clienti, ARPU di parco \u20ac765)", "trig": "quando i clienti attivi arrivano a 21 (Fase 1)", "tipo": "mrr_cli", "data": "2027-01-31", "fatto": "", "mrr": 16100, "cli": 21}, {"gruppo": "azienda", "nome": "Fase 2", "alias": "Nel foglio Premi: \u20ac26,8k MRR (~35 cl)", "trig": "quando i clienti attivi arrivano a 35", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "azienda", "nome": "Fase 3", "alias": "Nel foglio Premi: \u20ac52,8k MRR (~69 cl)", "trig": "quando i clienti attivi arrivano a 69", "tipo": "mrr_cli", "data": "2027-11-30", "fatto": "", "mrr": 52800, "cli": 69}, {"gruppo": "azienda", "nome": "Fase 4 operativa", "alias": "", "trig": "quando i clienti attivi arrivano a 96 e l'MRR a \u20ac73,4k", "tipo": "mrr_cli", "data": "2028-04-30", "fatto": "", "mrr": 73400, "cli": 96}, {"gruppo": "azienda", "nome": "Traguardo 174k", "alias": "Nel foglio Premi: TRAGUARDO 174k: \u20ac174k incasso al mese (~155 clienti, MRR \u20ac169,4k)", "trig": "quando l'incasso del mese supera i 174.000 (netto circa 81.765)", "tipo": "mrr_cli", "data": "2030-09-30", "fatto": "", "mrr": 169448, "cli": 155}, {"gruppo": "azienda", "nome": "\u20ac966k di fatturato nel 2027", "alias": "", "trig": "dic 2027: obiettivo 966.073 (tolleranza 1%)", "tipo": "anno", "data": "2027-12-31", "fatto": "", "soglia": 966073}, {"gruppo": "azienda", "nome": "\u20ac1,66M di fatturato nel 2028", "alias": "", "trig": "dic 2028: obiettivo 1.662.805 (tolleranza 1%)", "tipo": "anno", "data": "2028-12-31", "fatto": "", "soglia": 1662805}, {"gruppo": "evento", "nome": "Evento dal vivo col team", "alias": "Nel foglio Premi: \u20ac100k fatturato cumulato \u2192 EVENTO DI TEAM", "trig": "quando il fatturato cumulato supera i 100.000", "tipo": "cum", "data": "2026-12-31", "fatto": "", "soglia": 100000}, {"gruppo": "evento", "nome": "Evento dal vivo coi clienti", "alias": "Nel foglio Premi: \u20ac200k fatturato cumulato \u2192 EVENTO DAL VIVO", "trig": "quando il fatturato cumulato supera i 200.000", "tipo": "cum", "data": "2027-02-28", "fatto": "", "soglia": 200000}, {"gruppo": "personale", "nome": "\u20ac10k netti al mese", "alias": "", "trig": "ott 2026, primo mese sopra i 10.000 netti e stabile da li in avanti.", "tipo": "netto", "data": "2026-10-31", "fatto": "set 2026", "soglia": 10000}, {"gruppo": "personale", "nome": "Pila \u20ac14k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 14.000", "tipo": "pila", "data": "2026-10-31", "fatto": "", "soglia": 14000}, {"gruppo": "personale", "nome": "Rolex", "alias": "", "trig": "a 62.000 di Pila, a merito e con tasse zero", "tipo": "pila", "data": "2027-04-30", "fatto": "", "soglia": 62000}, {"gruppo": "personale", "nome": "Viaggio a Dubai", "alias": "", "trig": "a 35 clienti attivi (Fase 2) e tasse zero", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "personale", "nome": "Pila \u20ac125k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 125.000", "tipo": "pila", "data": "2027-08-31", "fatto": "", "soglia": 125000}, {"gruppo": "personale", "nome": "Pila \u20ac400k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 400.000", "tipo": "pila", "data": "2028-07-31", "fatto": "", "soglia": 400000}], "valore": {"utile": "\u20ac 981.179", "margine": "46,95%", "v3": "\u20ac 2.943.536", "v4": "\u20ac 3.924.714"}};
+const D = {"bucket": {"personale": [{"nome": "\u20ac16,1k MRR (~21 clienti, ARPU di parco \u20ac765)", "sotto": "quando i clienti attivi arrivano a 21 (Fase 1)", "data": "2027-01-31", "fatto": "", "p": 0.5549}, {"nome": "Pila ~\u20ac14k", "sotto": "quando il 20% degli incassi cumulati supera i 14.000", "data": "2026-10-31", "fatto": "", "p": 0.7993}, {"nome": "\u20ac10k netti (tolti i costi)", "sotto": "ott 2026, primo mese sopra i 10.000 netti e stabile da li in avanti.", "data": "2026-10-31", "fatto": "set 2026", "p": 1.0}, {"nome": "Rolex (orologio)", "sotto": "a 62.000 di Pila, a merito e con tasse zero", "data": "2027-04-30", "fatto": "", "p": 0.1805}, {"nome": "Dubai (viaggio)", "sotto": "a 35 clienti attivi (Fase 2) e tasse zero", "data": "2027-04-30", "fatto": "", "p": 0.3334}, {"nome": "\u20ac26,8k MRR (~35 cl)", "sotto": "quando i clienti attivi arrivano a 35", "data": "2027-04-30", "fatto": "", "p": 0.3334}, {"nome": "\u20ac52,8k MRR (~69 cl)", "sotto": "quando i clienti attivi arrivano a 69", "data": "2027-11-30", "fatto": "", "p": 0.1692}, {"nome": "Pila \u20ac 125k (patrimonio in banca)", "sotto": "quando il 20% degli incassi cumulati supera i 125.000", "data": "2027-08-31", "fatto": "", "p": 0.0895}, {"nome": "Pila \u20ac 400k (patrimonio in banca)", "sotto": "quando il 20% degli incassi cumulati supera i 400.000", "data": "2028-07-31", "fatto": "", "p": 0.028}, {"nome": "TRAGUARDO 174k: \u20ac174k incasso al mese (~155 clienti, MRR \u20ac169,4k)", "sotto": "quando l'incasso del mese supera i 174.000 (netto circa 81.765)", "data": "2030-09-30", "fatto": "", "p": 0.0527}, {"nome": "\u20ac100k fatturato cumulato \u2192 EVENTO DI TEAM", "sotto": "quando il fatturato cumulato supera i 100.000", "data": "2026-12-31", "fatto": "", "p": 0.5595}, {"nome": "\u20ac200k fatturato cumulato \u2192 EVENTO DAL VIVO", "sotto": "quando il fatturato cumulato supera i 200.000", "data": "2027-02-28", "fatto": "", "p": 0.2797}, {"nome": "\u20ac966k fatturato nel 2027", "sotto": "dic 2027: obiettivo 966.073 (tolleranza 1%)", "data": "2027-12-31", "fatto": "", "p": null}, {"nome": "\u20ac1,66M fatturato nel 2028", "sotto": "dic 2028: obiettivo 1.662.805 (tolleranza 1%)", "data": "2028-12-31", "fatto": "", "p": null}], "aziendale": [{"nome": "FASE 1", "sotto": "\u20ac16,1k \u00b7 ~21 clienti", "data": "2027-01-31", "fatto": "", "p": 0.5549}, {"nome": "FASE 2", "sotto": "\u20ac26,8k \u00b7 ~35 clienti", "data": "2027-04-30", "fatto": "", "p": 0.3334}, {"nome": "FASE 3", "sotto": "\u20ac52,8k \u00b7 ~69 clienti", "data": "2027-11-30", "fatto": "", "p": 0.1692}, {"nome": "FASE 4 OPERATIVA", "sotto": "\u20ac73,4k \u00b7 ~96 clienti", "data": "2028-04-30", "fatto": "", "p": 0.1217}, {"nome": "TRAGUARDO 174k", "sotto": "\u20ac169,4k \u00b7 ~155 clienti", "data": "2030-09-30", "fatto": "", "p": 0.0527}, {"nome": "Evento dal vivo (team)", "sotto": "\u20ac100k fatt. cumulato", "data": "2026-12-31", "fatto": "", "p": 0.5595}, {"nome": "Evento dal vivo coi clienti", "sotto": "\u20ac200k fatt. cumulato", "data": "2027-02-28", "fatto": "", "p": 0.2797}, {"nome": "Fatturato 2026 (apr-dic): \u20ac 128.080", "sotto": "incasso di dicembre \u20ac 30.078", "data": "2026-12-31", "fatto": "", "p": 0.4368}, {"nome": "Fatturato 2027: \u20ac 966.073", "sotto": "incasso di dicembre \u20ac 116.312", "data": "2027-12-31", "fatto": "", "p": null}, {"nome": "Fatturato 2028: \u20ac 1.662.805", "sotto": "incasso di dicembre \u20ac 152.509", "data": "2028-12-31", "fatto": "", "p": null}, {"nome": "Valore azienda al traguardo 174k: \u20ac 2.943.536 a 3x, \u20ac 3.924.714 a 4x", "sotto": "utile annuo \u20ac 981.179, margine 46,95%", "data": "2030-09-30", "fatto": "", "p": null}]}, "letto": "22/10/2026", "mrr": 8934.0, "cli": 12.0, "incassi": 55950.0, "pila": 11190.0, "voci": [{"gruppo": "azienda", "nome": "Fase 1", "alias": "Nel foglio Premi: \u20ac16,1k MRR (~21 clienti, ARPU di parco \u20ac765)", "trig": "quando i clienti attivi arrivano a 21 (Fase 1)", "tipo": "mrr_cli", "data": "2027-01-31", "fatto": "", "mrr": 16100, "cli": 21}, {"gruppo": "azienda", "nome": "Fase 2", "alias": "Nel foglio Premi: \u20ac26,8k MRR (~35 cl)", "trig": "quando i clienti attivi arrivano a 35", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "azienda", "nome": "Fase 3", "alias": "Nel foglio Premi: \u20ac52,8k MRR (~69 cl)", "trig": "quando i clienti attivi arrivano a 69", "tipo": "mrr_cli", "data": "2027-11-30", "fatto": "", "mrr": 52800, "cli": 69}, {"gruppo": "azienda", "nome": "Fase 4 operativa", "alias": "", "trig": "quando i clienti attivi arrivano a 96 e l'MRR a \u20ac73,4k", "tipo": "mrr_cli", "data": "2028-04-30", "fatto": "", "mrr": 73400, "cli": 96}, {"gruppo": "azienda", "nome": "Traguardo 174k", "alias": "Nel foglio Premi: TRAGUARDO 174k: \u20ac174k incasso al mese (~155 clienti, MRR \u20ac169,4k)", "trig": "quando l'incasso del mese supera i 174.000 (netto circa 81.765)", "tipo": "mrr_cli", "data": "2030-09-30", "fatto": "", "mrr": 169448, "cli": 155}, {"gruppo": "azienda", "nome": "\u20ac966k di fatturato nel 2027", "alias": "", "trig": "dic 2027: obiettivo 966.073 (tolleranza 1%)", "tipo": "anno", "data": "2027-12-31", "fatto": "", "soglia": 966073}, {"gruppo": "azienda", "nome": "\u20ac1,66M di fatturato nel 2028", "alias": "", "trig": "dic 2028: obiettivo 1.662.805 (tolleranza 1%)", "tipo": "anno", "data": "2028-12-31", "fatto": "", "soglia": 1662805}, {"gruppo": "evento", "nome": "Evento dal vivo col team", "alias": "Nel foglio Premi: \u20ac100k fatturato cumulato \u2192 EVENTO DI TEAM", "trig": "quando il fatturato cumulato supera i 100.000", "tipo": "cum", "data": "2026-12-31", "fatto": "", "soglia": 100000}, {"gruppo": "evento", "nome": "Evento dal vivo coi clienti", "alias": "Nel foglio Premi: \u20ac200k fatturato cumulato \u2192 EVENTO DAL VIVO", "trig": "quando il fatturato cumulato supera i 200.000", "tipo": "cum", "data": "2027-02-28", "fatto": "", "soglia": 200000}, {"gruppo": "personale", "nome": "\u20ac10k netti al mese", "alias": "", "trig": "ott 2026, primo mese sopra i 10.000 netti e stabile da li in avanti.", "tipo": "netto", "data": "2026-10-31", "fatto": "set 2026", "soglia": 10000}, {"gruppo": "personale", "nome": "Pila \u20ac14k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 14.000", "tipo": "pila", "data": "2026-10-31", "fatto": "", "soglia": 14000}, {"gruppo": "personale", "nome": "Rolex", "alias": "", "trig": "a 62.000 di Pila, a merito e con tasse zero", "tipo": "pila", "data": "2027-04-30", "fatto": "", "soglia": 62000}, {"gruppo": "personale", "nome": "Viaggio a Dubai", "alias": "", "trig": "a 35 clienti attivi (Fase 2) e tasse zero", "tipo": "mrr_cli", "data": "2027-04-30", "fatto": "", "mrr": 26800, "cli": 35}, {"gruppo": "personale", "nome": "Pila \u20ac125k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 125.000", "tipo": "pila", "data": "2027-08-31", "fatto": "", "soglia": 125000}, {"gruppo": "personale", "nome": "Pila \u20ac400k", "alias": "", "trig": "quando il 20% degli incassi cumulati supera i 400.000", "tipo": "pila", "data": "2028-07-31", "fatto": "", "soglia": 400000}], "valore": {"utile": "\u20ac 981.179", "margine": "46,95%", "v3": "\u20ac 2.943.536", "v4": "\u20ac 3.924.714"}};
 const eur = n => "\u20ac " + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const MESI = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
 const dt = iso => new Date(iso+"T12:00:00");
@@ -209,10 +244,49 @@ document.getElementById("next").innerHTML = `
       <span class="manca">${nx.manca}</span></div>
   </div>`;
 
-// raggiunti
-document.getElementById("doneR").textContent = fatti.length + " su " + D.voci.length;
+// bucket list: tutte le righe dei due fogli
+const BK = [["personale","Personale","Obiettivi & Premi"],["aziendale","Aziendale","Obiettivi Aziendali"]];
+const ICO = {
+  personale:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFD21F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6.6 5.2 5.2 0 0 1 21.3 12C19 16.6 12 21 12 21z"/></svg>`,
+  aziendale:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A537" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6"/></svg>`};
+const OKS = `<svg viewBox="0 0 24 24" fill="none" stroke="#0B1A3A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+let bf = "tutte", bq = "";
+try{ bf = localStorage.getItem("traguardi-bf") || "tutte"; }catch(e){}
+const tuttiBk = [...D.bucket.personale, ...D.bucket.aziendale];
+document.getElementById("bkR").textContent = tuttiBk.filter(r=>r.fatto).length + " completati su " + tuttiBk.length;
+function bkChips(){
+  const F2 = [["tutte","Tutte",tuttiBk.length],["fatte","Completati",tuttiBk.filter(r=>r.fatto).length],["aperte","Da fare",tuttiBk.filter(r=>!r.fatto).length]];
+  document.getElementById("bkf").innerHTML = F2.map(([k,n,c])=>`<button type="button" class="chip" id="bf-${k}" data-k="${k}" aria-pressed="${bf===k}">${n} \u00b7 ${c}</button>`).join("");
+  document.querySelectorAll("#bkf .chip").forEach(b=>b.onclick=()=>{bf=b.dataset.k;try{localStorage.setItem("traguardi-bf",bf)}catch(e){};bkChips();bkDraw();});
+}
+function ring(p){
+  const r=12, c=2*Math.PI*r;
+  return `<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="${r}" fill="none" stroke="#1A3068" stroke-width="3.5"/>${p>0?`<circle cx="15" cy="15" r="${r}" fill="none" stroke="#D4A537" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${c*p} ${c}"/>`:""}</svg>`;
+}
+function bkDraw(){
+  const qq = bq.trim().toLowerCase();
+  document.getElementById("bk").innerHTML = BK.map(([k,nome,foglio])=>{
+    const tutte = D.bucket[k], fatte = tutte.filter(r=>r.fatto).length;
+    const lista = tutte.filter(r=> bf==="tutte" || (bf==="fatte") === !!r.fatto)
+      .filter(r=> !qq || (r.nome+" "+r.sotto).toLowerCase().includes(qq));
+    const righe = lista.map(r=>{
+      const pc = r.p==null ? null : Math.round(r.p*100);
+      const dx = r.fatto ? `<b>fatto</b>${r.fatto}` : `<b>${pc==null?(r.data&&r.data.slice(0,4)>String(new Date().getFullYear())?"da gen":"in attesa"):pc+"%"}</b>${r.data?quando(r.data):""}`;
+      return `<li class="${r.fatto?"ok":""}"><span class="ck ${r.fatto?"ok":""}">${r.fatto?OKS:ring(r.p||0)}</span>
+        <div><b>${r.nome}</b><span class="s">${r.sotto}</span></div><div class="rt">${dx}</div></li>`;
+    }).join("");
+    return `<div class="col ${k}"><div class="ch"><span class="ci">${ICO[k]}</span><div><h3>${nome}</h3><div class="cs">${fatte} di ${tutte.length} completati \u00b7 foglio ${foglio}</div></div></div>
+      <div class="bar cbar"><i style="width:${fatte/tutte.length*100}%"></i></div>
+      ${righe ? `<ul>${righe}</ul>` : `<p class="empty">Niente da mostrare con questo filtro.</p>`}</div>`;
+  }).join("");
+}
+document.getElementById("bq").addEventListener("input", e=>{ bq=e.target.value; bkDraw(); });
+bkChips(); bkDraw();
+
+// raggiunti (mensola tolta: i completati stanno nella bucket list)
+if (document.getElementById("doneR")) document.getElementById("doneR").textContent = fatti.length + " su " + D.voci.length;
 const cup = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B1A3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>`;
-document.getElementById("shelf").innerHTML = fatti.map(v=>`<div class="won"><div class="cup">${cup}</div><div><b>${v.nome}</b><span>raggiunto ${v.fatto||""}</span></div></div>`).join("") || `<p class="empty">Ancora nessuno.</p>`;
+if (document.getElementById("shelf")) document.getElementById("shelf").innerHTML = fatti.map(v=>`<div class="won"><div class="cup">${cup}</div><div><b>${v.nome}</b><span>raggiunto ${v.fatto||""}</span></div></div>`).join("") || `<p class="empty">Ancora nessuno.</p>`;
 
 // da raggiungere, per anno
 let filtro="tutti";
